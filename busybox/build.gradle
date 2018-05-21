@@ -12,8 +12,7 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 27
-        versionCode 1281
-        versionName=busyboxVersion
+        versionName = busyboxVersion
     }
 
     buildTypes {
@@ -62,6 +61,7 @@ afterEvaluate {
             tasks."generate${flavor.name.capitalize()}DebugResources".dependsOn "download${flavor.name}Busybox"
             tasks."generate${flavor.name.capitalize()}ReleaseResources".dependsOn "download${flavor.name}Busybox"
     }
+    project.tasks.findByName('install').dependsOn('assemble')
 }
 
 repositories {
