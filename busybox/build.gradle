@@ -43,6 +43,22 @@ android {
             }
         }
     }
+    defaultPublishConfig "armv7lRelease"
+    publishNonDefault true
+}
+
+if( android.productFlavors.size() > 0 ) {
+    android.libraryVariants.all { variant ->
+        if( android.publishNonDefault && variant.name == android.defaultPublishConfig ) {
+            def bundleTask = tasks["bundle${name.capitalize()}"]
+            artifacts {
+                archives(bundleTask.archivePath) {
+                    classifier null
+                    builtBy bundleTask
+                }
+            }
+        }
+    }
 }
 
 dependencies {
@@ -61,7 +77,6 @@ afterEvaluate {
             tasks."generate${flavor.name.capitalize()}DebugResources".dependsOn "download${flavor.name}Busybox"
             tasks."generate${flavor.name.capitalize()}ReleaseResources".dependsOn "download${flavor.name}Busybox"
     }
-    project.tasks.findByName('install').dependsOn('assemble')
 }
 
 repositories {
