@@ -46,20 +46,6 @@ android {
     defaultPublishConfig "armv7lRelease"
 }
 
-if( android.productFlavors.size() > 0 ) {
-    android.libraryVariants.all { variant ->
-        if( android.publishNonDefault && variant.name == android.defaultPublishConfig ) {
-            def bundleTask = tasks["bundle${name.capitalize()}"]
-            artifacts {
-                archives(bundleTask.archivePath) {
-                    classifier null
-                    builtBy bundleTask
-                }
-            }
-        }
-    }
-}
-
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
