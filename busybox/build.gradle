@@ -44,7 +44,6 @@ android {
         }
     }
     defaultPublishConfig "armv7lRelease"
-    publishNonDefault true
 }
 
 if( android.productFlavors.size() > 0 ) {
